@@ -1,0 +1,60 @@
+body {
+  background-color: rgb(255, 253, 221);
+}
+
+.outer {
+  background-color: rgb(255, 246, 234);
+  margin: auto;
+  margin-top: 10%;
+  width: 500px;
+  height: 600px;
+  border-radius: 10%;
+  box-sizing: border-box;
+  border: 6px dashed rgb(210, 214, 224);
+  padding: 20px;
+}
+
+.shopping {
+  color: rgb(202, 127, 127);
+  font: 3rem "Fira Sans", serif;
+  font-weight: 900;
+  height: 70px;
+  text-align: center;
+  border-bottom: 6px dashed rgb(210, 214, 224);
+}
+
+li {
+  color: rgb(202, 127, 127);
+  padding: 5px;
+  height: 20px;
+  background-color: rgba(253, 230, 199, 0.5);
+  border-radius: 10px 100px / 120px;
+  margin: 5px 0;
+  text-align: left;
+  list-style: none;
+}
+
+.all-list {
+  margin: 0;
+  padding: 10px;
+}
+
+button {
+  background-color: transparent;
+  float: right;
+  font-size: large;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  color: var(--color-dark-puple);
+}
+
+.write {
+  background-color: rgb(210, 214, 224);
+  height: 20px;
+}
+.plus {
+  bottom: 10px;
+  background-color: rgb(210, 214, 224);
+  height: 30px;
+}
