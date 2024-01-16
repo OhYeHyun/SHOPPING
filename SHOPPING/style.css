@@ -77,3 +77,27 @@ button {
   font-size: 40px;
   margin-right: 20px;
 }
+
+.list:hover {
+  background-color: rgba(192, 252, 249, 0.192);
+  color: rgb(150, 97, 97);
+}
+
+.list:hover button {
+  color: rgb(150, 97, 97);
+  transform: scale(1.1);
+}
+
+.list:focus button {
+  animation: rotate_button 6s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+@keyframes rotate_button {
+  from {
+    transform: rotate(-10deg);
+  }
+  to {
+    transform: rotate(10deg);
+  }
+}
