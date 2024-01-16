@@ -5,9 +5,12 @@ body {
 .outer {
   background-color: rgb(255, 246, 234);
   margin: auto;
-  margin-top: 10%;
-  width: 500px;
-  height: 600px;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  min-width: 266px;
+  width: 38%;
+  min-height: 200px;
+  height: 500px;
   border-radius: 10%;
   box-sizing: border-box;
   border: 6px dashed rgb(210, 214, 224);
