@@ -1,10 +1,12 @@
 body {
   background-color: rgb(255, 253, 221);
+  cursor: default;
 }
 
 b {
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 600;
+  padding: 3px;
 }
 .outer {
   background-color: rgb(255, 246, 234);
@@ -19,7 +21,7 @@ b {
   border-radius: 60px;
   box-sizing: border-box;
   border: 6px dashed rgb(210, 214, 224);
-  padding: 20px;
+  padding: 10px;
   overflow: hidden;
 }
 
@@ -33,71 +35,107 @@ b {
 }
 
 li {
+  font-size: 40px;
   color: rgb(202, 127, 127);
-  padding: 5px;
+  padding: 5px 0px;
   height: 40px;
+  width: 100%;
   line-height: 40px;
-  background-color: rgba(253, 230, 199, 0.5);
   border-radius: 10px 100px / 120px;
   margin: 5px 0;
-  text-align: left;
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+}
+.title {
+  position: relative;
+  color: rgb(202, 127, 127);
+  height: 45px;
+  background-color: rgba(253, 230, 199, 0.5);
+  border-radius: 10px 100px / 120px;
   list-style: none;
   display: flex;
+  flex-grow: 1;
+  align-items: center;
 }
-
 .all-list {
   margin: 0;
-  padding: 10px;
+  padding: 2px;
+  flex-direction: column;
+}
+
+.delete {
+  position: absolute;
+  right: 10px;
 }
 
 button {
   display: flex;
+  color: rgb(202, 127, 127);
   background-color: transparent;
-  margin: auto 0 auto auto;
-  font-size: 40px;
+  padding: 1px;
+  margin: 5px;
+  font-size: 20px;
   cursor: pointer;
   border: none;
-  color: rgb(202, 127, 127);
-  top: -6px;
 }
 
+.end {
+  display: flex;
+  align-items: flex-end;
+}
 .write {
-  position: absolute;
+  display: flex;
   background-color: rgb(210, 214, 224);
   padding: 5px;
   margin-top: 5px;
-  width: 100%;
   height: 60px;
-  display: flex;
-  bottom: -2px;
-  left: -4px;
+  align-items: center;
+  bottom: 0px;
 }
 .plus {
+  position: relative;
   color: rgb(110, 140, 216);
   font-size: 40px;
-  margin-right: 20px;
+  right: 0px;
 }
 
-.list:hover {
+.title:hover {
   background-color: rgba(192, 252, 249, 0.192);
   color: rgb(150, 97, 97);
 }
 
-.list:hover button {
+.title:hover button {
   color: rgb(150, 97, 97);
+  animation: rotate_button 0.5s infinite;
   transform: scale(1.1);
-}
-
-.list:focus button {
-  animation: rotate_button 6s linear infinite;
-  transform-origin: 50% 50%;
 }
 
 @keyframes rotate_button {
   from {
+    transform: rotate(10deg);
+  }
+  50% {
     transform: rotate(-10deg);
   }
   to {
     transform: rotate(10deg);
   }
+}
+
+.delete:hover {
+  color: rgba(255, 0, 0, 0.808);
+}
+
+.write:hover {
+  background-color: rgba(210, 214, 224, 0.726);
+  cursor: text;
+}
+
+.plus:hover {
+  color: rgb(62, 103, 207);
+}
+
+.plus:active {
+  color: rgb(110, 140, 216);
 }
