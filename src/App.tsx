@@ -1,15 +1,32 @@
 import "./assets/style.css";
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 
 const itemData = [
     "우유",
     "라면",
-    "김치",
 ]
+// localStorage.removeItem('items')
 
 function App() {
-  const [items, setItems] = useState(itemData)
+  let stringLocalItems = localStorage.getItem('items');
+  if (!stringLocalItems) {
+    localStorage.setItem('items', JSON.stringify(itemData))
+    stringLocalItems = JSON.stringify(itemData)
+  }
+  const localItems = JSON.parse(stringLocalItems)
+  const [items, setItems] = useState(!localItems ? itemData : localItems)
   const inputRef = useRef<HTMLInputElement>(null);
+  const removeRefs = useRef<(HTMLButtonElement | null)[]>([])
+
+  const handleRemove = (idx: number) => {
+    alert(`"${items[idx]}"이(가) 삭제되었습니다.`)
+    const updatedItems = items.filter((_: any, i: number) => idx !== i)
+    setItems(updatedItems)
+  }
+
+  useEffect(() => {
+    localStorage.setItem('items', JSON.stringify(items));
+  }, [items]);
 
   return (
       <>
@@ -17,18 +34,22 @@ function App() {
           <div className="shopping">shopping</div>
 
           <ul className="all-list">
-            {items.map(item => (
-                <li className="custom-li">
-                  <button className="check custom-button">
-                    <i className="fa fa-circle-check"></i>
+            {items.map((item: string, idx: number) => (
+              <li key={idx} className="custom-li">
+                <button className="check custom-button">
+                  <i className="fa fa-circle-check"></i>
+                </button>
+                <div className="title shop-item">
+                  <span>{item}</span>
+                  <button
+                    className="delete"
+                    ref={(el) => (removeRefs.current[idx] = el)}
+                    onClick={() => handleRemove(idx)}
+                  >
+                    <i className="fa fa-trash"></i>
                   </button>
-                  <div className="title shop-item">
-                    <span>{item}</span>
-                    <button className="delete">
-                      <i className="fa fa-trash"></i>
-                    </button>
-                  </div>
-                </li>
+                </div>
+              </li>
             ))}
           </ul>
 
@@ -48,6 +69,7 @@ function App() {
                    const item = inputRef.current!.value;
                    inputRef.current!.value = "";
                    setItems([...items, item]);
+                   alert(`"${item}"이(가) 추가되었습니다.`)
                  }}>
               <i className="fa fa-square-plus"></i>
             </div>
