@@ -46,6 +46,12 @@ function App() {
     setItems(updatedItems);
   }
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleAdd();
+    }
+  };
+
   useEffect(() => {
     localStorage.setItem('items', JSON.stringify(items));
   }, [items]);
@@ -90,6 +96,7 @@ function App() {
               }}
               placeholder='입력하세요.'
               autoFocus={true}
+              onKeyDown={handleKeyDown}
           />
           <div className="item-add-button"
                onClick={() => handleAdd()}>
