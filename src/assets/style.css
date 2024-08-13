@@ -42,6 +42,7 @@ body {
   height: 70px;
   text-align: center;
   border-bottom: 6px dashed rgb(210, 214, 224);
+
 }
 
 .custom-li {
@@ -56,6 +57,8 @@ body {
   list-style: none;
   display: inline-flex;
   align-items: center;
+  cursor: pointer
+
 }
 
 .title {
@@ -135,7 +138,7 @@ body {
   }
 }
 
-.custom-button {
+.check{
   display: flex;
   color: rgb(202, 127, 127);
   background-color: transparent;
@@ -169,10 +172,17 @@ body {
   }
 }
 
+#error-msg {
+  position: fixed;
+  bottom: 0;
+  translate: 10%;
+  font-size: x-small;
+  color: red;
+}
+
 .completed {
-  text-decoration: line-through;
-  text-decoration-color: rgb(150, 97, 97);
-  text-decoration-thickness: 3px;
+  text-decoration: line-through rgb(150, 97, 97) 3px;
+  background-color : rgba(223, 202, 177, 0.5) !important;
 }
 
 @keyframes rotate_button {

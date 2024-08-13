@@ -1,5 +1,5 @@
 import "./assets/style.css";
-import {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 const itemData = [
   "우유",
@@ -19,7 +19,8 @@ function App() {
   const inputRef = useRef<HTMLInputElement>(null);
   const removeRefs = useRef<(HTMLButtonElement | null)[]>([])
 
-  const handleRemove = (idx: number) => {
+  const handleRemove = (idx: number, event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation()
     const updatedItems = items.filter((_: any, i: number) => idx !== i)
     setItems(updatedItems)
   }
@@ -29,9 +30,21 @@ function App() {
           return i === idx ? {...item, completed: !item.completed} : item;
         }
     );
-    console.log(updatedItems)
     setItems(updatedItems);
   };
+
+  const handleAdd = () => {
+    const item = inputRef.current!.value;
+    const errorMsg = document.getElementById('error-msg') as HTMLElement;
+    if (!item) {
+      errorMsg.textContent = "* 입력값이 없습니다."
+      return;
+    }
+    errorMsg.textContent = ""
+    const updatedItems = [...items, { name: item, completed: false }]
+    inputRef.current!.value = "";
+    setItems(updatedItems);
+  }
 
   useEffect(() => {
     localStorage.setItem('items', JSON.stringify(items));
@@ -44,50 +57,46 @@ function App() {
 
         <ul className="all-list">
           {items.map((item: any, idx: number) => (
-            <li key={idx} className="custom-li">
-              <button className="check custom-button">
-                <i className="fa fa-circle-check"></i>
-              </button>
-              <div
-                className={`title shop-item ${item.completed ? 'completed' : ''}`}
-                onClick={() => handleCheck(idx)}
-              >
-                <span>{item.name}</span>
-                <button
-                  className="delete"
-                  ref={(el) => (removeRefs.current[idx] = el)}
-                  onClick={() => handleRemove(idx)}
-                >
-                  <i className="fa fa-trash"></i>
+              <li key={idx} className="custom-li">
+                <button className="check">
+                  <i className="fa fa-circle-check"></i>
                 </button>
-              </div>
-            </li>
+                <div
+                    className={`title shop-item ${item.completed ? 'completed' : ''}`}
+                    onClick={() => handleCheck(idx)}
+                >
+                  <span>{item.name}</span>
+                  <button
+                      className="delete"
+                      ref={(el) => (removeRefs.current[idx] = el)}
+                      onClick={(event) => handleRemove(idx, event)}
+                  >
+                    <i className="fa fa-trash"></i>
+                  </button>
+                </div>
+              </li>
           ))}
         </ul>
 
         <div className="write">
           <input
-            ref={inputRef}
-            style={{
-              height: "60%",
-              fontSize: "2rem",
-              width: "100%",
-              borderRadius: "0.5rem",
-              border: "none"
-            }}
-            placeholder='입력하세요.'
-            autoFocus={true}
+              ref={inputRef}
+              style={{
+                height: "60%",
+                fontSize: "2rem",
+                width: "100%",
+                borderRadius: "0.5rem",
+                border: "none"
+              }}
+              placeholder='입력하세요.'
+              autoFocus={true}
           />
-
           <div className="item-add-button"
-            onClick={() => {
-              const item = inputRef.current!.value;
-              inputRef.current!.value = "";
-              setItems([...items, { name: item, completed: false }]);
-            }}>
+               onClick={() => handleAdd()}>
             <i className="fa fa-square-plus"></i>
           </div>
-         </div>
+          <div id="error-msg"></div>
+        </div>
       </div>
     </>
   );
