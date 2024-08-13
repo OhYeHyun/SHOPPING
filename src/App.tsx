@@ -6,15 +6,16 @@ const itemData = [
   "라면",
 ]
 // localStorage.removeItem('items')
+const initialItems = itemData.map(item => ({ name: item, completed: false }));
 
 function App() {
   let stringLocalItems = localStorage.getItem('items');
   if (!stringLocalItems) {
-    localStorage.setItem('items', JSON.stringify(itemData))
-    stringLocalItems = JSON.stringify(itemData)
+    localStorage.setItem('items', JSON.stringify(initialItems))
+    stringLocalItems = JSON.stringify(initialItems)
   }
   const localItems = JSON.parse(stringLocalItems)
-  const [items, setItems] = useState(!localItems ? itemData : localItems)
+  const [items, setItems] = useState(localItems)
   const inputRef = useRef<HTMLInputElement>(null);
   const removeRefs = useRef<(HTMLButtonElement | null)[]>([])
 
@@ -24,8 +25,13 @@ function App() {
   }
 
   const handleCheck = (idx: number) => {
-    const listToCheck = items[idx];
-  }
+    const updatedItems = items.map((item: any, i: number) => {
+          return i === idx ? {...item, completed: !item.completed} : item;
+        }
+    );
+    console.log(updatedItems)
+    setItems(updatedItems);
+  };
 
   useEffect(() => {
     localStorage.setItem('items', JSON.stringify(items));
@@ -37,13 +43,16 @@ function App() {
         <div className="shopping">shopping</div>
 
         <ul className="all-list">
-          {items.map((item: string, idx: number) => (
+          {items.map((item: any, idx: number) => (
             <li key={idx} className="custom-li">
               <button className="check custom-button">
                 <i className="fa fa-circle-check"></i>
               </button>
-              <div className="title shop-item">
-                <span>{item}</span>
+              <div
+                className={`title shop-item ${item.completed ? 'completed' : ''}`}
+                onClick={() => handleCheck(idx)}
+              >
+                <span>{item.name}</span>
                 <button
                   className="delete"
                   ref={(el) => (removeRefs.current[idx] = el)}
@@ -66,7 +75,7 @@ function App() {
               borderRadius: "0.5rem",
               border: "none"
             }}
-            placeholder='아이디를 입력하세요.'
+            placeholder='입력하세요.'
             autoFocus={true}
           />
 
@@ -74,7 +83,7 @@ function App() {
             onClick={() => {
               const item = inputRef.current!.value;
               inputRef.current!.value = "";
-              setItems([...items, item]);
+              setItems([...items, { name: item, completed: false }]);
             }}>
             <i className="fa fa-square-plus"></i>
           </div>

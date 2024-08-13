@@ -163,11 +163,16 @@ body {
 
   padding: 0 1.5rem;
 
-  focu
   &:hover {
     background-color: rgba(210, 214, 224, 0.726);
     cursor: text;
   }
+}
+
+.completed {
+  text-decoration: line-through;
+  text-decoration-color: rgb(150, 97, 97);
+  text-decoration-thickness: 3px;
 }
 
 @keyframes rotate_button {
